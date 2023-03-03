@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>index: {{.path}}</title>
+</head>
+<body>
+    <h2>index: {{.path}}</h2>
+    {{if .notRoot}}
+    <a href="..">..</a><br>
+    {{end}}
+    {{range .list}}
+    <a href="./{{.}}">{{.}}</a><br>
+    {{end}}
+</body>
+</html>
