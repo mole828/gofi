@@ -4,7 +4,6 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
-	"strings"
 
 	"facette.io/natsort"
 	"github.com/gin-gonic/gin"
@@ -17,9 +16,7 @@ func ListFile(root string) ([]string, error) {
 		return nil, err
 	}
 	for i := range matches {
-		news := strings.Replace(
-			filepath.Base(matches[i]),
-			filepath.Base(root), "", 1)
+		news := filepath.Base(matches[i])
 		if info, err := os.Stat(matches[i]); err == nil && info.IsDir() {
 			news = news + "/"
 		}
@@ -31,7 +28,7 @@ func ListFile(root string) ([]string, error) {
 
 func GinBasic(router *gin.Engine, root string) {
 	router.LoadHTMLGlob("src/html/**/*")
-	router.GET("/file/*path", func(ctx *gin.Context) {
+	router.GET("/*path", func(ctx *gin.Context) {
 		path := ctx.Param("path")
 		fullpath := root + path
 		println(fullpath)
